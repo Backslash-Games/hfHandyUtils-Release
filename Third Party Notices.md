@@ -1,0 +1,1 @@
+https://www.notion.so/halfhand870/Third-Party-Notices-365d086035d3802e9d37d61a712829b6
