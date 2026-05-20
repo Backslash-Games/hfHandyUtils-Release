@@ -11,15 +11,36 @@ namespace HFHandyUtils.Time
     /// </summary>
     public class Cooldown
     {
+        /// <summary>
+        ///     Reference to parent MonoBehaviour
+        /// </summary>
         MonoBehaviour mono = null;
 
+        /// <summary>
+        ///     Total Cooldown duration, Unmodified
+        /// </summary>
         float basic = 0;
+        /// <summary>
+        ///     Modifier applied to UnityEngine.Time.deltaTime when reducing the time of the Cooldown 
+        /// </summary>
         float reductionRate = 0;
+        /// <summary>
+        ///     Current Cooldown duration
+        /// </summary>
         float timer = 0;
 
         #region Flags
+        /// <summary>
+        ///     Flag that tracks if the Cooldown is locked (active). True while on cooldown
+        /// </summary>
         bool locked = false;
+        /// <summary>
+        ///     Flag that tracks if the Cooldown was canceled. True when canceled
+        /// </summary>
         bool canceled = false;
+        /// <summary>
+        ///     Flag that tracks if the Cooldown is paused. True when paused
+        /// </summary>
         bool paused = false;
         #endregion
         #region Cooldown State Events
