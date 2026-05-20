@@ -3,6 +3,12 @@ using UnityEngine;
 
 namespace HFHandyUtils.Time
 {
+    /// <summary>
+    ///     Organized method of handling cooldown events
+    ///     <br></br>
+    ///     <br>Luke Wittbrodt :: lwittbrodt87@gmail.com :: halfhand870</br>
+    ///     <br><a href="https://halfhand870.notion.site/Cooldown-350d086035d38004935bcd46aac4fdf0">Documentation</a></br>
+    /// </summary>
     public class Cooldown
     {
         MonoBehaviour mono = null;
@@ -35,21 +41,21 @@ namespace HFHandyUtils.Time
         /// </summary>
         public event CooldownState OnSuccess;
         /// <summary>
-        ///     Runs when the cooldown ends
-        /// </summary>
-        public event CooldownState OnEnd;
-        /// <summary>
         ///     Runs when the cooldown is canceled
         /// </summary>
         public event CooldownState OnCancel;
-        #endregion
-        
         /// <summary>
-        ///     Constructor for cooldown
+        ///     Runs when the cooldown ends in any way
         /// </summary>
-        /// <param name="mono_parent">MonoBehaviour that is used to parse coroutines</param>
-        /// <param name="basic">The basic time for cooldown</param>
-        /// <param name="reductionRate">The reduction rate for the cooldown</param>
+        public event CooldownState OnEnd;
+        #endregion
+
+        /// <summary>
+        ///     Constructor
+        /// </summary>
+        /// <param name="mono_parent">Reference to parent MonoBehaviour</param>
+        /// <param name="basic">Total Cooldown duration, Unmodified</param>
+        /// <param name="reductionRate">Modifier applied to UnityEngine.Time.deltaTime when reducing the time of the Cooldown</param>
         public Cooldown(MonoBehaviour mono_parent, float basic, float reductionRate)
         {
             mono = mono_parent;
@@ -58,7 +64,7 @@ namespace HFHandyUtils.Time
 
         #region Get Methods
         /// <summary>
-        ///     Method to determine if the cooldown is avaliable
+        ///     Returns true if the Cooldown is not running
         /// </summary>
         /// <returns>True if its off cooldown</returns>
         public bool Available()
@@ -67,7 +73,7 @@ namespace HFHandyUtils.Time
         }
 
         /// <summary>
-        ///     Checks if the cooldown is running
+        ///     Returns true if the Cooldown is running
         /// </summary>
         /// <returns>Locked state</returns>
         public bool Active()
@@ -76,7 +82,7 @@ namespace HFHandyUtils.Time
         }
 
         /// <summary>
-        ///     Gets the percentage complete
+        ///     Gets the percent completion of the Cooldown
         /// </summary>
         /// <returns>A value between 0 and 1 that shows how far through the cooldown is. 1 being finished</returns>
         public float GetPercentComplete()
@@ -88,8 +94,8 @@ namespace HFHandyUtils.Time
         /// <summary>
         ///     Sets the rates for the cooldown
         /// </summary>
-        /// <param name="basic"></param>
-        /// <param name="reductionRate"></param>
+        /// <param name="basic">Total Cooldown duration, Unmodified</param>
+        /// <param name="reductionRate">Modifier applied to UnityEngine.Time.deltaTime when reducing the time of the Cooldown </param>
         public void SetRates(float basic, float reductionRate)
         {
             this.basic = basic;
@@ -105,7 +111,7 @@ namespace HFHandyUtils.Time
         }
 
         /// <summary>
-        ///     Removes all listeners from cooldown
+        ///     Removes all event listeners
         /// </summary>
         public void RemoveAllListeners()
         {
@@ -120,7 +126,7 @@ namespace HFHandyUtils.Time
 
         #region Math
         /// <summary>
-        ///     Adds the to the timer
+        ///     Adds a value to the timer
         /// </summary>
         /// <param name="value">Amount of time added</param>
         public void AddTime(float value)
@@ -132,7 +138,8 @@ namespace HFHandyUtils.Time
         private Coroutine activeRoutine = null;
 
         /// <summary>
-        ///     Starts the cooldown, can have a delay
+        ///     Starts the Cooldown. 
+        ///     <br></br> A delay can be set to start cooldown after a delay period
         /// </summary>
         public void Start(float delay = 0)
         {
@@ -158,7 +165,7 @@ namespace HFHandyUtils.Time
             activeRoutine = mono.StartCoroutine(Cooldown_Enum(delay));
         }
         /// <summary>
-        ///     Cancels the cooldown
+        ///     Cancels the Cooldown 
         /// </summary>
         public void Cancel()
         {
@@ -172,7 +179,7 @@ namespace HFHandyUtils.Time
             StopActiveRoutine();
         }
         /// <summary>
-        ///     Pauses the cooldown
+        ///     Pauses the Cooldown 
         /// </summary>
         public void Pause()
         {
@@ -184,7 +191,7 @@ namespace HFHandyUtils.Time
             OnPause?.Invoke();
         }
         /// <summary>
-        ///     Unpauses the cooldown, no delay allowed here
+        ///     Unpauses the Cooldown with no delay
         /// </summary>
         private void Unpause()
         {
@@ -197,7 +204,8 @@ namespace HFHandyUtils.Time
         #endregion
         #region Coroutine
         /// <summary>
-        ///     The main logic for a timed cooldown
+        ///     Asynchronously handles Cooldown logic.
+        ///     A delay can be set to start logic after a delay period
         /// </summary>
         /// <param name="delay">Defined delay, runs between flags and on cooldown started</param>
         /// <returns>Wait</returns>
@@ -235,7 +243,7 @@ namespace HFHandyUtils.Time
 
 
         /// <summary>
-        ///     Stops the active routine
+        ///     Stops the activeRoutine
         /// </summary>
         private void StopActiveRoutine()
         {
@@ -251,6 +259,12 @@ namespace HFHandyUtils.Time
         #endregion
 
         #region String Methods
+        /// <summary>
+        ///     Formats string as follows…
+        ///     <br></br> {basic} | {reductionRate} :: { timer}
+        ///     <br></br> Locked: { locked}..Canceled:{canceled}..Paused:{ paused}
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             string output = "";

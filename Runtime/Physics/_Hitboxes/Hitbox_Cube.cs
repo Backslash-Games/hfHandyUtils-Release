@@ -6,26 +6,33 @@ namespace HFHandyUtils.Physics
     ///     Defines a cube that checks for collision
     ///     <br></br>
     ///     <br>Luke Wittbrodt :: lwittbrodt87@gmail.com :: halfhand870</br>
+    ///     <br><a href="https://halfhand870.notion.site/Hitbox_Cube-34ad086035d381568cbfd30f6659a59e">Documentation</a></br>
     /// </summary>
     [System.Serializable]
     public class Hitbox_Cube : Hitbox
     {
+        /// <summary>
+        ///     Defines the scale of the Hitbox_Cube
+        /// </summary>
         [Header("Cube")]
-        [SerializeField] private Vector3 size = Vector3.one;
-        [SerializeField] private Vector3 localEuler = Vector3.zero;
+        public Vector3 size = Vector3.one;
+        /// <summary>
+        ///     Reference to the Hitbox_Cube euler angles
+        /// </summary>
+        public Vector3 localEuler = Vector3.zero;
 
         public Hitbox_Cube(Transform parent) : base(parent) { }
 
         /// <summary>
-        ///     Check cube collision
+        ///     Checks if the hitbox is colliding. Returns state
         /// </summary>
-        /// <returns>True when colliding</returns>
+        /// <returns>True when a collision is found</returns>
         public override bool CheckCollision()
         {
             return UnityEngine.Physics.CheckBox(GetWorldPosition(), size / 2f, Quaternion.Euler(localEuler), GetLayerMask());
         }
         /// <summary>
-        ///     Checks collision and outputs collided objects
+        ///     Gets list of colliding objects. Returns state
         /// </summary>
         /// <param name="collided">List of colliders that the hitbox collided with</param>
         /// <returns>CheckCollision()</returns>
@@ -36,7 +43,7 @@ namespace HFHandyUtils.Physics
         }
 
         /// <summary>
-        ///     Draw cube gizmos
+        ///     Defines how the Hitbox gizmo is drawn
         /// </summary>
         public override void DrawGizmos()
         {
@@ -44,29 +51,5 @@ namespace HFHandyUtils.Physics
             SetGizmoColor();
             Gizmos.DrawMesh(Resources.GetBuiltinResource<Mesh>("Cube.fbx"), GetWorldPosition(), Quaternion.Euler(localEuler), size);
         }
-
-
-        #region Get/Set Methods
-        /// <summary>
-        ///     Sets the size of the box
-        /// </summary>
-        /// <param name="input">Scale Vector</param>
-        public void SetSize(Vector3 input) { size = input; }
-        /// <summary>
-        ///     Gets the size of the hitbox
-        /// </summary>
-        /// <returns>Scale Vector</returns>
-        public Vector3 GetSize() { return size; }
-        /// <summary>
-        ///     Sets the rotation of the box
-        /// </summary>
-        /// <param name="input">Euler Angles</param>
-        public void SetLocalEuler(Vector3 input) { localEuler = input; }
-        /// <summary>
-        ///     Gets the rotation of the box
-        /// </summary>
-        /// <returns>Euler Angles</returns>
-        public Vector3 GetLocalEuler() { return localEuler; }
-        #endregion
     }
 }

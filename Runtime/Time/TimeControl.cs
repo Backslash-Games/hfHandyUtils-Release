@@ -7,13 +7,22 @@ namespace HFHandyUtils.Time
     ///     Organized method of controlling Unity Time
     ///     <br></br>
     ///     <br>Luke Wittbrodt :: lwittbrodt87@gmail.com :: halfhand870</br>
+    ///     <br><a href="https://halfhand870.notion.site/TimeControl-34ad086035d38056ae4df54023b4bca8">Documentation</a></br>
     /// </summary>
     public class TimeControl
     {
-        // Holds a reference to the timescale of the project
+        #region Variables
+        /// <summary>
+        ///     Default time scale on awake
+        /// </summary>
         private static float defaultScale = 0;
-        // Holds a reference to the associated monobehaviour script. Used for coroutines
+        /// <summary>
+        ///     Reference to parent object
+        /// </summary>
         private MonoBehaviour mono = null;
+        #endregion
+
+        #region Constructor
         public TimeControl(MonoBehaviour mono)
         {
             // Set the private scale if it hasnt been set
@@ -22,7 +31,7 @@ namespace HFHandyUtils.Time
             // Set the mono behaviour
             this.mono = mono;
         }
-
+        #endregion
         #region Time Scale Adjustments
         /// <summary>
         ///     Instantly resets time scale to default
@@ -37,7 +46,7 @@ namespace HFHandyUtils.Time
             UnityEngine.Time.timeScale = amount;
         }
         /// <summary>
-        ///     Sets Unity time scale with a reset fade over time frame
+        ///     Sets Unity time scale with a fading reset over a period of time
         /// </summary>
         /// <param name="amount">Initial Amount</param>
         /// <param name="speed">Reset Speed</param>
@@ -58,7 +67,7 @@ namespace HFHandyUtils.Time
         }
 
         /// <summary>
-        ///     Fade reset over time frame
+        ///     Logic for fading reset over a period of time
         /// </summary>
         /// <param name="speed">Reset speed</param>
         /// <returns>Wait</returns>
@@ -73,7 +82,7 @@ namespace HFHandyUtils.Time
         }
 
         /// <summary>
-        ///     Force reset after delay
+        ///     Logic for force reset after delay
         /// </summary>
         /// <param name="speed">Reset speed</param>
         /// <returns>Wait</returns>
@@ -85,6 +94,11 @@ namespace HFHandyUtils.Time
         #endregion
 
         #region String Methods
+        /// <summary>
+        ///     Formats string as follows… 
+        ///     <br></br> Time Scale: {Time.timeScale}
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             string output = "";

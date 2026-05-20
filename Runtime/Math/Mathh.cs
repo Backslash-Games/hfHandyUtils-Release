@@ -5,12 +5,13 @@ using UnityEngine;
 ///     Handy math functions
 ///     <br></br>
 ///     <br>Luke Wittbrodt :: lwittbrodt87@gmail.com :: halfhand870</br>
+///     <br><a href="https://halfhand870.notion.site/Mathh-34ad086035d38013af25e09c177023bb">Documentation</a></br>
 /// </summary>
 public class Mathh
 {
     #region Vector Calculations
     /// <summary>
-    ///     Calculates a perfect spread of X positions around the edge of a unit circle. Angle between each position is uniform.
+    ///     Calculates a spread around a unit circle with uniform angles between each point. Length of output is determined by 'amount'
     /// </summary>
     /// <param name="amount">Positions around the unit circle</param>
     /// <returns>List of positions</returns>
@@ -40,7 +41,7 @@ public class Mathh
     }
 
     /// <summary>
-    ///     Gets the closest object to a position
+    ///     Gets the closest object from 'input' to 'postition'
     /// </summary>
     /// <typeparam name="T">Object Type that extends Monobehaviour</typeparam>
     /// <param name="input">Input objects</param>
@@ -84,7 +85,9 @@ public class Mathh
     }
 
     /// <summary>
-    ///     Gets the seperation percent between two vectors
+    ///     Gets the speration percent between two vectors. 
+    ///     <br></br> 0 - Both vectors are opposite
+    ///     <br></br> 1 - Both vectors are identical
     /// </summary>
     /// <returns>Value between 0-1, 1 being two identical vectors and 0 being opposites</returns>
     public static float GetVectorAccuracy(Vector3 primary, Vector3 other)
@@ -108,7 +111,7 @@ public class Mathh
 
     #region Binary Calculations
     /// <summary>
-    ///     Converts an integer into a binary string
+    ///     Converts input binary into a readable string
     /// </summary>
     /// <param name="input">Integer</param>
     /// <returns>Binary string</returns>
@@ -132,7 +135,10 @@ public class Mathh
         return binaryString;
     }
     /// <summary>
-    ///     Takes in a uint and gets the physical length in Base2 
+    ///     Gets the physical length of a binary in Base2
+    ///     <br></br> 10 - Returns 2
+    ///     <br></br> 101 -  Returns 3
+    ///     <br></br> 100 - Returns 3 
     /// </summary>
     /// <param name="input">Input Value</param>
     /// <returns>Physical Length</returns>
@@ -152,7 +158,7 @@ public class Mathh
     }
 
     /// <summary>
-    ///     Gets a set of bits from a range
+    ///     Gets a range of bits from input
     /// </summary>
     /// <param name="input">Input</param>
     /// <param name="size">Binary Size</param>
@@ -170,7 +176,7 @@ public class Mathh
         return (uint)outputBinary;
     }
     /// <summary>
-    ///     Sets the binary range
+    ///     Uses input to override bits in parent
     /// </summary>
     /// <param name="startIndex">Start index of the ser</param>
     /// <param name="input">Override integer</param>
@@ -193,7 +199,7 @@ public class Mathh
         parent = parentModified;
     }
     /// <summary>
-    ///     Clears a binary range
+    ///     Resets a range of bits in parent
     /// </summary>
     /// <param name="startIndex">Start index</param>
     /// <param name="length">Length</param>

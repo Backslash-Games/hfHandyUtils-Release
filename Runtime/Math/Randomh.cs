@@ -7,6 +7,7 @@ namespace HFHandyUtils.Math
     ///     Handy random control
     ///     <br></br>
     ///     <br>Luke Wittbrodt :: lwittbrodt87@gmail.com :: halfhand870</br>
+    ///     <br><a href="https://halfhand870.notion.site/Randomh-34ad086035d3800aae34e88e8c17a1df">Documentation</a></br>
     /// </summary>
     public static class Randomh
     {
@@ -14,24 +15,39 @@ namespace HFHandyUtils.Math
         /// <summary>
         ///     Entry to contain a generic type and weight
         /// </summary>
-        /// <typeparam name="T">Generic Type</typeparam>
+        /// <typeparam name="T">Value definition</typeparam>
         [System.Serializable]
         public struct WeightedEntry<T>
         {
+            /// <summary>
+            ///     Contained value
+            /// </summary>
             public T value;
+            /// <summary>
+            ///     Value weight
+            /// </summary>
             public int weight;
         }
 
         /// <summary>
         ///     Library of weighted objects
         /// </summary>
-        /// <typeparam name="T">Generic Type</typeparam>
+        /// <typeparam name="T">Value definition</typeparam>
         [System.Serializable]
         public struct WeightedLibrary<T>
         {
+            /// <summary>
+            ///     Collection of library entries
+            /// </summary>
             public WeightedEntry<T>[] weightedObjects;
 
+            /// <summary>
+            ///     Cached value information
+            /// </summary>
             private CacheValue<T[]> cache_Values;
+            /// <summary>
+            ///     Cached weight information
+            /// </summary>
             private CacheValue<int[]> cache_Weights;
 
             /// <summary>
@@ -88,10 +104,10 @@ namespace HFHandyUtils.Math
             }
         }
         #endregion
-        
+
         #region Weighted Randomness
         /// <summary>
-        ///     Method that returns a random weighted object
+        ///     Gets a (weighted) random object from a library
         /// </summary>
         /// <typeparam name="T">Generic type</typeparam>
         /// <param name="library">Random Object</param>
@@ -101,7 +117,7 @@ namespace HFHandyUtils.Math
             return GetWeightedObject(library.GetValues(), library.GetWeights());
         }
         /// <summary>
-        ///     Method that returns a random weighted object
+        ///     Gets a (weighted) random object from a list of values and weights
         /// </summary>
         /// <typeparam name="T">Generic Type</typeparam>
         /// <param name="values">Object list</param>
@@ -115,7 +131,7 @@ namespace HFHandyUtils.Math
 
 
         /// <summary>
-        ///     Quick call to grab an index based on a weighted list.
+        ///     Gets a (weighted) random index from a list of weights
         /// </summary>
         /// <param name="weights">Weighted list</param>
         /// <returns>Randomly chosen index based on weights.</returns>
@@ -152,9 +168,9 @@ namespace HFHandyUtils.Math
 
             return weights.Length - 1;
         }
-        
+
         /// <summary>
-        ///     Quick call to grab the total weight based on a weighted list.
+        ///     Gets the total weight value based on weights
         /// </summary>
         /// <param name="weights">Weighted list</param>
         /// <returns>Combined total of weighted list</returns>
@@ -184,6 +200,11 @@ namespace HFHandyUtils.Math
         }
         #endregion
         #region Testing
+        /// <summary>
+        ///     Prints the percent chance of each object in library to occur to the Unity Console
+        /// </summary>
+        /// <typeparam name="T">Generic type</typeparam>
+        /// <param name="library">Random Object</param>
         public static void Test_WeightedLibraryPercentages<T>(WeightedLibrary<T> library)
         {
             // Pull data

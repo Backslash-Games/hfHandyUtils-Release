@@ -1,147 +1,154 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class MonoSave : MonoBehaviour
+namespace HFHandyUtils.Mono
 {
-    private bool encode = false;
-
-    public string save_filePath;
-    private bool pathSet = false;
-    public string save_fileName;
-    private string save_path = string.Empty;
-
-    private bool validLoad = true;
-    private int actionCount = 0;
-
-    // Ensures all following calls are stable
-    private void Validate()
+    /// <summary>
+    ///     [WORK IN PROGRESS] Awaiting Rework. No documentation listed. Please do not use
+    ///     <br></br>
+    ///     <br>Luke Wittbrodt :: lwittbrodt87@gmail.com :: halfhand870</br>
+    ///     <br><a href="https://halfhand870.notion.site/MonoSave-34ad086035d3801eb71ffb5d4c98577c">Documentation</a></br>
+    /// </summary>
+    public class MonoSave : MonoBehaviour
     {
-        SetFilePath();
-        ValidateFile();
-    }
+        private bool encode = false;
 
-    // Makes sure the game is looking in the right location
-    private void SetFilePath()
-    {
-        // Check if the path has already been set
-        if (pathSet)
-            return;
+        public string save_filePath;
+        private bool pathSet = false;
+        public string save_fileName;
+        private string save_path = string.Empty;
 
-        // Append the application path to the start of the file path
-        save_filePath = Application.persistentDataPath + "/" + save_filePath;
-        save_path = save_filePath + "/" + save_fileName;
-        pathSet = true;
-    }
+        private bool validLoad = true;
+        private int actionCount = 0;
 
-    // Ensure the file path exists
-    private void ValidateFile()
-    {
-        // Check if the path exists
-        if (!Directory.Exists(save_filePath))
+        // Ensures all following calls are stable
+        private void Validate()
         {
-            // If the path doesn't exist then make it
-            Debug.LogWarning("MonoSave -> Creating directory " + save_filePath);
-            Directory.CreateDirectory(save_filePath);
+            SetFilePath();
+            ValidateFile();
         }
 
-        // Check if the file exists
-        if (!File.Exists(save_path))
+        // Makes sure the game is looking in the right location
+        private void SetFilePath()
         {
-            // If the file doesn't exists then make it
-            Debug.LogWarning("MonoSave -> Creating file " + save_path);
-            FileStream fs = File.Create(save_path);
-            fs.Close();
-        }
-    }
+            // Check if the path has already been set
+            if (pathSet)
+                return;
 
-    // Encode information
-    string EncodeString(string value)
-    {
-        return value;
-    }
-    string DecodeString(string value)
-    {
-        return value;
-    }
-
-    // Save information
-    public void Save()
-    {
-        Save(this);
-    }
-    public void Save(object value)
-    {
-        // First run validation methods
-        Validate();
-
-        if (!validLoad && !Application.isEditor)
-        {
-            Debug.LogError("MonoSave -> Last load was invalid, throwing early to perserve data");
-            return;
+            // Append the application path to the start of the file path
+            save_filePath = Application.persistentDataPath + "/" + save_filePath;
+            save_path = save_filePath + "/" + save_fileName;
+            pathSet = true;
         }
 
-        // Send out a message that the file is being saved
-        Debug.Log($"MonoSave ({actionCount}) -> Saving {value.GetType()}");
-
-        // Pull the save data from the provided value
-        string saveData = JsonUtility.ToJson(value, true);
-        // Write information
-        File.WriteAllText(save_path, EncodeString(saveData));
-
-        // Increase the action count for debugging
-        actionCount++;
-    }
-
-    // Load information
-    public void Load(object value)
-    {
-        // First run validation methods
-        Validate();
-
-        // Set valid load to false
-        validLoad = false;
-        string loadData = DecodeString(File.ReadAllText(save_path));
-
-        // Attempt to load
-        try
+        // Ensure the file path exists
+        private void ValidateFile()
         {
-            JsonUtility.FromJsonOverwrite(loadData, value);
-        }
-        catch (Exception e)
-        {
-            Debug.LogError("MonoSave -> Load failed with execption...\n" + e);
-            return;
+            // Check if the path exists
+            if (!Directory.Exists(save_filePath))
+            {
+                // If the path doesn't exist then make it
+                Debug.LogWarning("MonoSave -> Creating directory " + save_filePath);
+                Directory.CreateDirectory(save_filePath);
+            }
+
+            // Check if the file exists
+            if (!File.Exists(save_path))
+            {
+                // If the file doesn't exists then make it
+                Debug.LogWarning("MonoSave -> Creating file " + save_path);
+                FileStream fs = File.Create(save_path);
+                fs.Close();
+            }
         }
 
-        // Send out a message that the file is being loaded
-        Debug.Log($"MonoSave ({actionCount}) -> Loading {value.GetType()}");
+        // Encode information
+        string EncodeString(string value)
+        {
+            return value;
+        }
+        string DecodeString(string value)
+        {
+            return value;
+        }
 
-        // Flag the load as valid
-        validLoad = true;
+        // Save information
+        public void Save()
+        {
+            Save(this);
+        }
+        public void Save(object value)
+        {
+            // First run validation methods
+            Validate();
 
-        // Increase the action count for debugging
-        actionCount++;
+            if (!validLoad && !Application.isEditor)
+            {
+                Debug.LogError("MonoSave -> Last load was invalid, throwing early to perserve data");
+                return;
+            }
+
+            // Send out a message that the file is being saved
+            Debug.Log($"MonoSave ({actionCount}) -> Saving {value.GetType()}");
+
+            // Pull the save data from the provided value
+            string saveData = JsonUtility.ToJson(value, true);
+            // Write information
+            File.WriteAllText(save_path, EncodeString(saveData));
+
+            // Increase the action count for debugging
+            actionCount++;
+        }
+
+        // Load information
+        public void Load(object value)
+        {
+            // First run validation methods
+            Validate();
+
+            // Set valid load to false
+            validLoad = false;
+            string loadData = DecodeString(File.ReadAllText(save_path));
+
+            // Attempt to load
+            try
+            {
+                JsonUtility.FromJsonOverwrite(loadData, value);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("MonoSave -> Load failed with execption...\n" + e);
+                return;
+            }
+
+            // Send out a message that the file is being loaded
+            Debug.Log($"MonoSave ({actionCount}) -> Loading {value.GetType()}");
+
+            // Flag the load as valid
+            validLoad = true;
+
+            // Increase the action count for debugging
+            actionCount++;
+        }
+
+        public virtual void BindInformation(object value) { }
+
+        // Processing Methods
+        private void Awake()
+        {
+            // Load handler data
+            Debug.Log($"MonoSave -> Loading information for file with name {save_fileName}\n\nPath: {save_filePath}");
+            Load(this);
+            OnAwake();
+        }
+        public virtual void OnAwake() { }
+
+        private void OnDisable()
+        {
+            // Save on close
+            Save(this);
+        }
+        public virtual void Disable() { }
     }
-
-    public virtual void BindInformation(object value) { }
-
-    // Processing Methods
-    private void Awake()
-    {
-        // Load handler data
-        Debug.Log($"MonoSave -> Loading information for file with name {save_fileName}\n\nPath: {save_filePath}");
-        Load(this);
-        OnAwake();
-    }
-    public virtual void OnAwake() { }
-
-    private void OnDisable()
-    {
-        // Save on close
-        Save(this);
-    }
-    public virtual void Disable() { }
 }

@@ -7,6 +7,7 @@ namespace HFHandyUtils.Effects
     ///     Scene definition for playing an audio effect
     ///     <br></br>
     ///     <br>Luke Wittbrodt :: lwittbrodt87@gmail.com :: halfhand870</br>
+    ///     <br><a href="https://halfhand870.notion.site/EffectComponent_Audio-34ad086035d3805cb3e8e7a954f0b6a1">Documentation</a></br>
     /// </summary>
     [RequireComponent(typeof(AudioSource))]
     public class EffectComponent_Audio : EffectComponent
@@ -19,24 +20,43 @@ namespace HFHandyUtils.Effects
         [System.Serializable]
         public class AudioParameters : Parameters
         {
-            // Unity Mixing group that the played effect outputs to
+            /// <summary>
+            ///     Unity Mixing group that the played effect outputs to
+            /// </summary>
             public AudioMixerGroup output;
-            [Space]
-            // Flag, randomizes pitch when true
-            public bool randomizePitch = true;
-            // Flag, uses spatial audio when true
+            /// <summary>
+            ///     Flag, randomizes pitch when true
+            /// </summary>
+            [Space] public bool randomizePitch = true;
+            /// <summary>
+            ///     Flag, uses spatial audio when true
+            /// </summary>
             public bool spatial = true;
-            [Space]
-            // Controls the output volume of the audio effect
-            [Range(0, 1)] public float volume = 1;
+            /// <summary>
+            ///     Controls the output volume of the audio effect
+            /// </summary>
+            [Space] [Range(0, 1)] public float volume = 1;
         }
         #endregion
 
+        /// <summary>
+        ///     Reference to the audio source created by the component
+        /// </summary>
         [Header("Audio Components")]
         [SerializeField] private AudioSource source;
 
+        /// <summary>
+        ///     Defines the lower and upper range for pitch randomization 
+        /// </summary>
         private static readonly Vector2 s_PitchRange = new Vector2(0.7f, 1.3f);
 
+        /// <summary>
+        ///     Plays effect based on input
+        /// </summary>
+        /// <param name="target">Target Object</param>
+        /// <param name="parameters">Effect Parameters</param>
+        /// <param name="eventKey">Event key</param>
+        /// <param name="mode">Play mode</param>
         public override void Play(object target, Parameters parameters, string eventKey, EffectManager.PlayMode mode)
         {
             base.Play(target, parameters, eventKey, mode);
@@ -50,7 +70,7 @@ namespace HFHandyUtils.Effects
             // Set up initial
             AudioClip clip = (AudioClip)target;
             GetAudioSource(); // Ensure audio source is set properly
-                              // Apply parameters
+            // Apply parameters
             if (parameters is AudioParameters) ApplyParameters((AudioParameters)parameters);
 
             // Set cooldown time
@@ -86,7 +106,7 @@ namespace HFHandyUtils.Effects
 
         #region Parameter Handling
         /// <summary>
-        ///     Applies parameters to component
+        ///     Applies parameters (ap) to component
         /// </summary>
         /// <param name="ap">Input parameters</param>
         private void ApplyParameters(AudioParameters ap)
@@ -105,7 +125,7 @@ namespace HFHandyUtils.Effects
         #endregion
         #region Get Methods
         /// <summary>
-        ///     Gets the audio source
+        ///     Gets the audio source (source)
         /// </summary>
         /// <returns>Audio Source</returns>
         private AudioSource GetAudioSource()

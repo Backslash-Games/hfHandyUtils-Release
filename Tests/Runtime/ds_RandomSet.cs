@@ -1,12 +1,19 @@
 using System.Diagnostics;
 using System.Collections.Generic;
 using UnityEngine;
-using HFHandyUtils.Data;
+using HFHandyUtils.Data.Random;
 using TMPro;
 
 
 namespace HFHandyUtils.DebugScripts
 {
+    /// <summary>
+    ///     Debug script for RandomSets... Should only be used in Unity Inspector
+    ///     <br></br>
+    ///     <br>Luke Wittbrodt :: lwittbrodt87@gmail.com :: halfhand870</br>
+    ///     <br><a href="">Documentation</a></br>
+    /// </summary>
+    [AddComponentMenu("HFHandyUtils/Debug/ds_RandomSet")]
     public class ds_RandomSet : MonoBehaviour
     {
         public int seed = -1;

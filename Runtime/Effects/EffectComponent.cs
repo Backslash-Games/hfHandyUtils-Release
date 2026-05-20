@@ -8,6 +8,7 @@ namespace HFHandyUtils.Effects
     ///     Scene definition for playing an effect
     ///     <br></br>
     ///     <br>Luke Wittbrodt :: lwittbrodt87@gmail.com :: halfhand870</br>
+    ///     <br><a href="https://halfhand870.notion.site/EffectComponent-34ad086035d380c9b5b2f429d71d9a8a">Documentation</a></br>
     /// </summary>
     [System.Serializable]
     public class EffectComponent : MonoBehaviour
@@ -19,39 +20,78 @@ namespace HFHandyUtils.Effects
         [System.Serializable]
         public class Parameters
         {
-            public Transform origin; // Defines the origin of the effect
-            public bool sticky = true; // Flag that checks if the effect should follow the origin
-            private bool _continuous = false;
-
-            #region Get Set Methods
-            public bool GetContinuousState() { return _continuous; }
-            public void SetContinuousState(bool state) { _continuous = state; }
-            #endregion
+            /// <summary>
+            ///     Defines the origin of the effect
+            /// </summary>
+            public Transform origin;
+            /// <summary>
+            ///     Flag that checks if the effect should follow the origin
+            /// </summary>
+            public bool sticky = true;
         }
         #endregion
+        /// <summary>
+        ///      States that correlate with effect sequence
+        /// </summary>
         public enum EffectState { None, Initialized, Started, Paused, Stopped, Completed };
 
+        /// <summary>
+        ///     Current state of the effect, when changed it triggers the associated event
+        /// </summary>
         [Header("Effect Variables")]
         public EffectState effectState = EffectState.None;
         #region Effect State Events
+        /// <summary>
+        ///     Delegate for effect states changing
+        /// </summary>
         public delegate void EffectStateChanged();
+        /// <summary>
+        ///     Runs when object is initialized
+        /// </summary>
         public event EffectStateChanged OnInitialized;
+        /// <summary>
+        ///     Runs when the effect is started
+        /// </summary>
         public event EffectStateChanged OnStarted;
+        /// <summary>
+        ///     Runs when the effect is paused
+        /// </summary>  
         public event EffectStateChanged OnPaused;
+        /// <summary>
+        ///     Runs when the effect is stopped
+        /// </summary>
         public event EffectStateChanged OnStopped;
+        /// <summary>
+        ///     Runs when the effect is completed
+        /// </summary>
         public event EffectStateChanged OnCompleted;
         #endregion
+        /// <summary>
+        ///     Timer that tracks the allocated alive time of the effect
+        /// </summary>
         public Cooldown effectTimer;
 
-        // Private variables
+        /// <summary>
+        ///     Effect identifier. Pulled from inputted component name
+        /// </summary>
         private string _identifier = "";
-        // Duplicate Handling
+        /// <summary>
+        ///     The total amount of duplicate effects allowed at one time.
+        /// </summary>
         private static readonly byte s_MaxDuplicates = 15;
+        /// <summary>
+        ///     Dictionary of duplicate counts organized by Effect Identifier
+        /// </summary>
         private static Dictionary<string, byte> s_ActiveDupes;
-        // Continuous handling
+        /// <summary>
+        ///     List of active continuous Effects, only 1 active of each type is allowed at a time
+        /// </summary>
         private static List<string> s_ActiveContinuous;
 
         #region Unity Methods
+        /// <summary>
+        ///     Default Awake Method. Initializes effectTimer and binds CleanupEffect to OnCooldownSuccess
+        /// </summary>
         private void Awake()
         {
             effectTimer = new Cooldown(this, 0, 1);
@@ -60,6 +100,10 @@ namespace HFHandyUtils.Effects
         #endregion
 
         #region Sequencing
+        /// <summary>
+        ///     Initializes values when playing the effect
+        /// </summary>
+        /// <param name="p">Effect Parameters</param>
         public virtual void Initialize(Parameters p)
         {
             // Stick effect to origin
@@ -69,11 +113,20 @@ namespace HFHandyUtils.Effects
             if (p.sticky)
                 effectTimer.OnUpdate += () => StickToOrigin(p);
         }
+        /// <summary>
+        ///     Plays effect based on input
+        /// </summary>
+        /// <param name="target">Target Object</param>
+        /// <param name="parameters">Effect Parameters</param>
+        /// <param name="eventKey">Event key</param>
+        /// <param name="mode">Play mode</param>
         public virtual void Play(object target, Parameters parameters, string eventKey, EffectManager.PlayMode mode)
         {
             Initialize(parameters);
         }
-        // public virtual void Pause() { }
+        /// <summary>
+        ///     Stops the effect
+        /// </summary>
         public virtual void Stop() { CleanupEffect(); }
         #endregion
         #region Object Handling
@@ -102,14 +155,14 @@ namespace HFHandyUtils.Effects
 
         #region Effect State Handling
         /// <summary>
-        ///     Compares another effect state with our current
+        ///     Compares other with effectState
         /// </summary>
         /// <param name="other">Other effect state</param>
         /// <returns>True if states are equal</returns>
         public bool CompareEffectState(EffectState other) { return other.Equals(effectState); }
 
         /// <summary>
-        ///     Sets our effect state to a new state, runs events if changed
+        ///     Sets effectState to other, runs events if changed
         /// </summary>
         /// <param name="other">State to move to</param>
         public void SetEffectState(EffectState other)
@@ -126,7 +179,7 @@ namespace HFHandyUtils.Effects
         }
 
         /// <summary>
-        ///     Triggers the effect state event based on our current effect state
+        ///     Triggers the effect state event based on effectState
         /// </summary>
         private void InvokeEffectStateChanged()
         {
@@ -152,7 +205,7 @@ namespace HFHandyUtils.Effects
         #endregion
         #region Set Methods
         /// <summary>
-        ///     Sets the value of _identifier
+        ///     Sets the value of _identifier to key
         /// </summary>
         /// <param name="key">New Identifier</param>
         public void SetIdentifier(string key) { _identifier = key; }
@@ -185,7 +238,7 @@ namespace HFHandyUtils.Effects
         #endregion
         #region STATIC - Duplicate Handling
         /// <summary>
-        ///     Lazy initialization for Dupe Dictionary
+        ///     Lazy initialization for s_ActiveDupes
         /// </summary>
         private static void SetupDupeDictionary()
         {
@@ -194,7 +247,7 @@ namespace HFHandyUtils.Effects
         }
 
         /// <summary>
-        ///     Adds new effect to the dictionary
+        ///     Adds count of effectName to the dictionary
         /// </summary>
         /// <param name="effectName">Name of the effect</param>
         /// <param name="count">Amount of effect added</param>
@@ -214,7 +267,7 @@ namespace HFHandyUtils.Effects
             s_ActiveDupes.Add(effectName, (byte)count);
         }
         /// <summary>
-        ///     Removes effect from the dictionary
+        ///     Removes count of effectName the dictionary
         /// </summary>
         /// <param name="effectName">Name of the effect</param>
         /// <param name="count">Amount of effect removed</param>
@@ -233,7 +286,7 @@ namespace HFHandyUtils.Effects
         #endregion
         #region STATIC - Continuous Handling
         /// <summary>
-        ///     Lazy initialization for Active List
+        ///     Lazy initialization for s_ActiveContinuous
         /// </summary>
         static public void SetupContinuousList()
         {
@@ -242,7 +295,7 @@ namespace HFHandyUtils.Effects
         }
 
         /// <summary>
-        ///     Adds an effect name to the active continuous list
+        ///     Adds effectName to the active continuous list
         /// </summary>
         /// <param name="effectName">Effect name</param>
         static public void AddToContinuous(string effectName)
@@ -259,7 +312,7 @@ namespace HFHandyUtils.Effects
         }
 
         /// <summary>
-        ///     Removes entry from continuous list
+        ///     Removes entry with effectName from continuous list
         /// </summary>
         /// <param name="effectName">Effect name</param>
         static public void RemoveFromContinuous(string effectName)

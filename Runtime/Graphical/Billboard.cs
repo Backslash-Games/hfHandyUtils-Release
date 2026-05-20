@@ -3,13 +3,21 @@ using UnityEngine;
 namespace HFHandyUtils.Graphical
 {
     /// <summary>
-    ///     Positions a plane towards a target
+    ///     Positions an object towards a target
     ///     <br></br>
     ///     <br>Luke Wittbrodt :: lwittbrodt87@gmail.com :: halfhand870</br>
+    ///     <br><a href="https://halfhand870.notion.site/Billboard-34ad086035d38067802bf43f27425dab">Documentation</a></br>
     /// </summary>
+    [AddComponentMenu("HFHandyUtils/Graphical/Billboard")]
     public class Billboard : MonoBehaviour
     {
+        /// <summary>
+        ///     Flag; dictates if the billboard is active
+        /// </summary>
         [SerializeField] private bool active = true;
+        /// <summary>
+        ///     Target the billboard looks at
+        /// </summary>
         [SerializeField] private Transform target = null;
 
         // Update is called once per frame
@@ -18,7 +26,7 @@ namespace HFHandyUtils.Graphical
 
 
         /// <summary>
-        ///     Updates billboarding if active
+        ///     Updates the billboard. Called automatically in Unity Update
         /// </summary>
         private void UpdateBillboard()
         {
@@ -36,7 +44,7 @@ namespace HFHandyUtils.Graphical
 
 
         /// <summary>
-        ///     Initialzes all components of the billboard
+        ///     Sets up all components of the billboard
         /// </summary>
         /// <param name="state">Initial State</param>
         /// <param name="target">Initial Target</param>

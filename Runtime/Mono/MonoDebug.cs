@@ -8,31 +8,82 @@ namespace HFHandyUtils.Mono
     ///     Scene Object that prints organized monobehaviour ToString information
     ///     <br></br>
     ///     <br>Luke Wittbrodt :: lwittbrodt87@gmail.com :: halfhand870</br>
+    ///     <br><a href="https://halfhand870.notion.site/MonoDebug-34ad086035d380548266e899cc3ea4b0">Documentation</a></br>
     /// </summary>
+    [AddComponentMenu("HFHandyUtils/MonoBehaviour/MonoDebug")]
     public class MonoDebug : MonoBehaviour
     {
-        [SerializeField] private bool suppressAllMonoDebug = false; // Controls all mono debug suppression. If one is enabled then it will notify the user where the suppression source is
-        [SerializeField] private bool suppressLocalMonoDebug = false; // Controls suppression for only this mono debug script
+        /// <summary>
+        ///     When enabled, on Awake this MonoDebug will set suppressDebug to true. This action prints to the console and declares source.
+        /// </summary>
+        [SerializeField] private bool suppressAllMonoDebug = false;
+        /// <summary>
+        ///     When enabled, it will suppress this MonoDebug
+        /// </summary>
+        [SerializeField] private bool suppressLocalMonoDebug = false;
+        /// <summary>
+        ///     Universal suppression flag
+        /// </summary>
         public static bool suppressDebug = false;
-        [Space]
-        [SerializeField] private Vector3 offset;
+
+        /// <summary>
+        ///     Declares DebugStyle.World canvas offset
+        /// </summary>
+        [Space][SerializeField] private Vector3 offset;
+        /// <summary>
+        ///     Default DebugStyle.World canvas offset
+        /// </summary>
         private static readonly Vector3 defaultOffset = new Vector3(0, 2.5f, 0);
+        /// <summary>
+        ///     Declares text color
+        /// </summary>
         [SerializeField] private Color textColor = Color.white;
-        [Space]
-        [SerializeField] private DebugStyle debugStyle = DebugStyle.World;
+
+        /// <summary>
+        ///     Declares the build style of the canvas
+        /// </summary>
+        [Space][SerializeField] private DebugStyle debugStyle = DebugStyle.World;
+
+        /// <summary>
+        ///     States that correlate with style in which debug information is displayed
+        /// </summary>
         private enum DebugStyle { Canvas, World }
+        /// <summary>
+        ///     Declares text allignment
+        /// </summary>
         [SerializeField] private TextAlignmentOptions canvas_allignment = TextAlignmentOptions.TopLeft;
+        /// <summary>
+        ///     Declares the source of debug information
+        /// </summary>
         [SerializeField] private MonoBehaviour source = null;
 
+        /// <summary>
+        ///     Reference to the built canvas
+        /// </summary>
         private Canvas canvas;
+        /// <summary>
+        ///     Scale of DebugStyle.World canvas
+        /// </summary>
         private static readonly float canvasScale_world = 2.5f;
 
+        /// <summary>
+        ///     Reference to DebugStyle.World built billboarding
+        /// </summary>
         private Billboard billboard = null;
 
+        /// <summary>
+        ///     Reference to the built text
+        /// </summary>
         private TextMeshProUGUI text;
+        /// <summary>
+        ///     Padding on text
+        /// </summary>
         private static readonly float textPadding_canvas = 5;
 
         #region Unity Methods
+        /// <summary>
+        ///     Default Awake Method. Checks suppression and sets up billboard
+        /// </summary>
         private void Awake()
         {
             // Right out of the gates check our suppression
@@ -41,12 +92,18 @@ namespace HFHandyUtils.Mono
             // -> Set up the billboard component
             billboard = gameObject.AddComponent<Billboard>();
         }
+        /// <summary>
+        ///     Default Start Method. Initializes MonoDebug
+        /// </summary>
         private void Start()
         {
             // Build the inital components
             Initialize();
         }
 
+        /// <summary>
+        ///     Default Update Method. Runs Tick
+        /// </summary>
         private void Update()
         {
             Tick();
@@ -54,7 +111,7 @@ namespace HFHandyUtils.Mono
         #endregion
         #region Suppression Handling
         /// <summary>
-        ///     Checks to see if our source is suppressing functionality
+        ///     Checks if we need to supress MonoDebug
         /// </summary>
         private void CheckSuppression()
         {
@@ -73,7 +130,7 @@ namespace HFHandyUtils.Mono
             }
         }
         /// <summary>
-        ///     Checks to see if our script is currently suppressed
+        ///     Checks to see if the script is suppressed
         /// </summary>
         /// <returns>True when suppressed</returns>
         private bool isSuppressed()
@@ -102,7 +159,7 @@ namespace HFHandyUtils.Mono
         }
 
         /// <summary>
-        ///     Builds the initla objects in the world
+        ///     Sets up components needed for DebugStyle.World
         /// </summary>
         private void Draw_World()
         {
@@ -121,7 +178,7 @@ namespace HFHandyUtils.Mono
             if (billboard != null) { billboard.Initialize(true, canvas.transform); }
         }
         /// <summary>
-        ///     Builds the initial objects on a canvas
+        ///     Sets up components needed for DebugStyle.Canvas
         /// </summary>
         private void Draw_Canvas()
         {
@@ -187,7 +244,7 @@ namespace HFHandyUtils.Mono
         #endregion
         #region Updating
         /// <summary>
-        ///     Steps mono debug forward by 1
+        ///     Runs all update logic
         /// </summary>
         private void Tick()
         {
@@ -196,7 +253,7 @@ namespace HFHandyUtils.Mono
         }
 
         /// <summary>
-        ///     Updates text
+        ///     Updates text from source
         /// </summary>
         private void UpdateText()
         {

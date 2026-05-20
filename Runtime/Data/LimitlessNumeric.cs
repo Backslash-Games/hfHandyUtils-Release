@@ -7,11 +7,18 @@ namespace HFHandyUtils.Data
     ///     Defines a whole number with no maximum size
     ///     <br></br>
     ///     <br>Luke Wittbrodt :: lwittbrodt87@gmail.com :: halfhand870</br>
+    ///     <br><a href="https://halfhand870.notion.site/LimitlessNumeric-34ad086035d3801f9ea1f9a666465255">Documentation</a></br>
     /// </summary>
     [System.Serializable]
     public class LimitlessNumeric
     {
+        /// <summary>
+        ///     Collection of data that represents the current value of the LimitlessNumeric
+        /// </summary>
         [SerializeField] private List<ushort> numeric;
+        /// <summary>
+        ///     The maximum data value that can be stored in a numeric index
+        /// </summary>
         private static readonly ushort max_numeric_container = 1000;
 
         #region Constructors
@@ -19,6 +26,10 @@ namespace HFHandyUtils.Data
         {
             SetValue(value);
         }
+        /// <summary>
+        ///     Copies numeric into the current LimitlessNumeric
+        /// </summary>
+        /// <param name="numeric">Other numeric</param>
         public LimitlessNumeric(LimitlessNumeric numeric)
         {
             this.numeric = new List<ushort>(numeric.GetNumeric());
@@ -69,7 +80,7 @@ namespace HFHandyUtils.Data
         #endregion
         #region Get/Set Methods
         /// <summary>
-        ///     Sets the current numeric to a value
+        ///     Sets numeric to value through default parsing
         /// </summary>
         /// <param name="value">New Value</param>
         public void SetValue(int value)
@@ -77,7 +88,7 @@ namespace HFHandyUtils.Data
             numeric = new List<ushort>(IntToNumeric(value));
         }
         /// <summary>
-        ///     Gets the full numeric
+        ///     Gets numeric
         /// </summary>
         /// <returns>List of uShort</returns>
         public List<ushort> GetNumeric()
@@ -86,7 +97,7 @@ namespace HFHandyUtils.Data
         }
 
         /// <summary>
-        ///     Outputs text in a pretty format :3
+        ///     Outputs numeric in a readable format
         /// </summary>
         /// <returns>String</returns>
         public string PrettyPrint()
@@ -104,7 +115,7 @@ namespace HFHandyUtils.Data
             return output;
         }
         /// <summary>
-        ///     Pulls a value from numeric and evaluates it as a string
+        ///     Pads index with zeroes, used for PrettyPrint
         /// </summary>
         /// <returns>String</returns>
         private string GetValueString(int index, bool includeZeroes = true)
@@ -133,7 +144,7 @@ namespace HFHandyUtils.Data
 
         #region Tools
         /// <summary>
-        ///     Converts an integer to a limitless numeric
+        ///     Parses value to a List<ushort>
         /// </summary>
         /// <param name="value"></param>
         /// <returns>List of ushort</returns>
@@ -166,7 +177,7 @@ namespace HFHandyUtils.Data
         }
 
         /// <summary>
-        ///     Collapses each entry in the limitless numeric to ensure it doesn't exceede bounds
+        ///     Carries over overflown values in the numeric. Organizes data to ensure its valid.
         /// </summary>
         private void Refactor()
         {

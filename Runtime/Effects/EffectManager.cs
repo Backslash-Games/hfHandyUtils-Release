@@ -8,21 +8,34 @@ namespace HFHandyUtils.Effects
     ///     Required manager for Effects to function
     ///     <br></br>
     ///     <br>Luke Wittbrodt :: lwittbrodt87@gmail.com :: halfhand870</br>
+    ///     <br><a href="https://halfhand870.notion.site/EffectManager-34ad086035d38095a8a9dc5ccc4c53e9">Documentation</a></br>
     /// </summary>
+    [AddComponentMenu("HFHandyUtils/Managers/EffectManager")]
     public class EffectManager : MonoBehaviour
     {
-        #region Play Type
+        #region Play Mode
+        /// <summary>
+        ///     States that define effect play mode
+        /// </summary>
         public enum PlayMode { Impulse, Continuous };
         #endregion
 
         #region Singleton
-        // Singleton
+        /// <summary>
+        ///     Private reference to singleton instance
+        /// </summary>
         private static EffectManager _instance;
+        /// <summary>
+        ///     Public reference to singleton instance
+        /// </summary>
         public static EffectManager Instance { get { return _instance; } }
 
+        /// <summary>
+        ///     Creates the singleton instance
+        /// </summary>
         private void CreateSingleton()
         {
-            // -> Pulled from Out on the Red Sea
+            // -> Pulled from Luke Wittbrodt's - Out on the Red Sea
             // Checks if the instance of object is first of its type
             // If object is not unique, destroy current instance
             if (_instance != null && _instance != this)
@@ -37,6 +50,9 @@ namespace HFHandyUtils.Effects
         }
         #endregion
         #region Unity Methods
+        /// <summary>
+        ///     Default Awake Method. Runs CreateSingleton
+        /// </summary>
         private void Awake()
         {
             CreateSingleton();
@@ -46,7 +62,8 @@ namespace HFHandyUtils.Effects
         #region Generic
         #region Play
         /// <summary>
-        ///     Plays an effect from an Effect Library and state
+        ///     Plays an effect from the library using state as an identifier. 'mode' changes the way the effect is played. 
+        ///     Passes off actual play logic to Play<TContent, TParams>
         /// </summary>
         /// <typeparam name="TEnum">System Enum</typeparam>
         /// <typeparam name="TContent">Class</typeparam>
@@ -81,7 +98,7 @@ namespace HFHandyUtils.Effects
         }
 
         /// <summary>
-        ///     Plays a target (playable) object on an effect component
+        ///     Initializes an EffectComponent and then passes off play logic to EffectComponent.Play
         /// </summary>
         /// <typeparam name="TComponent">Effect component type</typeparam>
         /// <typeparam name="TParam">Effect component parameter type</typeparam>
@@ -121,6 +138,14 @@ namespace HFHandyUtils.Effects
         }
         #endregion
         #region Stop
+        /// <summary>
+        ///     Stops an active effect
+        /// </summary>
+        /// <typeparam name="TEnum">System Enum</typeparam>
+        /// <typeparam name="TContent">Class</typeparam>
+        /// <typeparam name="TParam">Effect component parameter type</typeparam>
+        /// <param name="library">Effect Library</param>
+        /// <param name="state">Enum State</param>
         public void Stop<TEnum, TContent, TParams>(EffectLibrary<TEnum, TContent, TParams> library, TEnum state)
             where TEnum : System.Enum
             where TContent : class
@@ -140,6 +165,12 @@ namespace HFHandyUtils.Effects
         #endregion
         #endregion
         #region Effect Component Handling
+        /// <summary>
+        ///     Builds an EffectComponent in the scene
+        /// </summary>
+        /// <typeparam name="T">Component</typeparam>
+        /// <param name="name">Name of effect component</param>
+        /// <returns>Built Object Component</returns>
         private T BuildEffectComponent<T>(string name) where T : Component
         {
             // Build object
@@ -150,6 +181,11 @@ namespace HFHandyUtils.Effects
             return buildTarget.GetComponent<T>();
         }
 
+        /// <summary>
+        ///     Finds a built EffectComponent in the scene
+        /// </summary>
+        /// <param name="hash">Searching hash</param>
+        /// <returns>Effect Component</returns>
         private EffectComponent FindComponent(int hash)
         {
             // Use a hash code to find the component in children
@@ -165,11 +201,14 @@ namespace HFHandyUtils.Effects
         #endregion
 
         #region Audio
+        /// <summary>
+        ///     Reference to the main audio mixer
+        /// </summary>
         [Header("Audio Components")]
         [SerializeField] private AudioMixer mixer;
         #region Set Methods
         /// <summary>
-        ///     Sets all of the mixer volume based on input
+        ///     Sets mixer volumes with tags “Master, Mixer, and Sound Effects”
         /// </summary>
         /// <param name="master">Master Volume</param>
         /// <param name="music">Music Volume</param>
@@ -182,7 +221,7 @@ namespace HFHandyUtils.Effects
         }
 
         /// <summary>
-        ///     Set a specific aspect of the mixer
+        ///     Sets the volume of a mixer component
         /// </summary>
         /// <param name="tag">Mixer tag</param>
         /// <param name="value">Mixer volume</param>
