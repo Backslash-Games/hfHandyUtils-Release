@@ -140,7 +140,7 @@ namespace HFHandyUtils.Data.Random
             }
 
             // Set local value
-            _localSeed = GlobalRandom.s_globalSeed.value + _name.GetHashCode();
+            _localSeed = newSeed;
             // Debug
             if (GlobalRandom.s_debugMode)
                 GlobalRandom.Log(typeof(TNumeric), _name, $"Set Local seed to {_localSeed}");

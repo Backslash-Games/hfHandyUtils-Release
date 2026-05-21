@@ -14,7 +14,7 @@ namespace HFHandyUtils.Data.Random
         /// <summary>
         ///     Flag that allows custom random system to print debug information
         /// </summary>
-        public readonly static bool s_debugMode = true;
+        public readonly static bool s_debugMode = false;
         /// <summary>
         ///     Set of allowed RandomSet types
         /// </summary>
@@ -52,9 +52,9 @@ namespace HFHandyUtils.Data.Random
         }
 
         /// <summary>
-        ///     Sets s_globalSeed with reset authority. Should be called in Unity Start
+        ///     Sets s_globalSeed with reset authority. Should be called in Unity Start. The seed must be a positive value
         /// </summary>
-        public static void SetGlobalSeed(int seed)
+        public static void SetGlobalSeed(int seed = -1)
         {
             int newSeed = seed;
             if (seed < 0)

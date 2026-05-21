@@ -68,6 +68,16 @@ namespace HFHandyUtils.DebugScripts
         {
             Repopulate();
         }
+        long mx_generated = 0;
+        private void Update()
+        {
+            long gnmb = (long)UnityEngine.Random.Range(0, 4294967295);
+            if(gnmb > mx_generated)
+            {
+                UnityEngine.Debug.Log($"{gnmb} / 4294967295 ({int.MaxValue})");
+                mx_generated = gnmb;
+            }
+        }
         private void OnDestroy()
         {
             _generation_byte.Terminate();
