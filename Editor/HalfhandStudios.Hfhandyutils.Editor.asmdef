@@ -1,7 +1,9 @@
 {
     "name": "HalfhandStudios.Hfhandyutils.Editor",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:db2b244d91aa1c94596d49831b81d9de"
+    ],
     "includePlatforms": [
         "Editor"
     ],

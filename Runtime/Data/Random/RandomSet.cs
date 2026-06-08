@@ -339,6 +339,18 @@ namespace HFHandyUtils.Data.Random
             return randomValue;
         }
         #endregion
+        #region Get Data
+        /// <summary>
+        ///     Pulls the raw data currently stored. Used in Unit Test
+        /// </summary>
+        /// <returns>TNumeric[]</returns>
+        public TNumeric[] GetAllValues() { return _values.value; }
+        /// <summary>
+        ///     Pulls the local seed currently stored. Used in Unit Test
+        /// </summary>
+        /// <returns>int<returns>
+        public int GetLocalSeed() { return _localSeed; }
+        #endregion
         #region Debug Prints
         public override string ToString()
         {

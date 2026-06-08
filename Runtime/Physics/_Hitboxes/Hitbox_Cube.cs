@@ -19,6 +19,7 @@ namespace HFHandyUtils.Physics
         /// <summary>
         ///     Reference to the Hitbox_Cube euler angles
         /// </summary>
+        [Space]
         public Vector3 localEuler = Vector3.zero;
 
         public Hitbox_Cube(Transform parent) : base(parent) { }
