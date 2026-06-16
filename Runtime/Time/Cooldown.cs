@@ -113,14 +113,31 @@ namespace HFHandyUtils.Time
         #endregion
         #region Set Methods
         /// <summary>
+        ///     Sets the basic rate
+        /// </summary>
+        /// <param name="basic">New basic rate</param>
+        public void SetBasicRate(float basic)
+        {
+            this.basic = basic;
+        }
+        /// <summary>
+        ///     Sets the reduction rate
+        /// </summary>
+        /// <param name="reductionRate">New reduction rate</param>
+        public void SetReductionRate(float reductionRate)
+        {
+            this.reductionRate = Mathf.Clamp(reductionRate, 0.01f, float.MaxValue);
+        }
+
+        /// <summary>
         ///     Sets the rates for the cooldown
         /// </summary>
         /// <param name="basic">Total Cooldown duration, Unmodified</param>
         /// <param name="reductionRate">Modifier applied to UnityEngine.Time.deltaTime when reducing the time of the Cooldown </param>
         public void SetRates(float basic, float reductionRate)
         {
-            this.basic = basic;
-            this.reductionRate = Mathf.Clamp(reductionRate, 0.01f, float.MaxValue);
+            SetBasicRate(basic);
+            SetReductionRate(reductionRate);
         }
         /// <summary>
         ///     Resets the timer for the cooldown
