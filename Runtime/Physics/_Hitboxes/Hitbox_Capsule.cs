@@ -1,7 +1,5 @@
-using PlasticGui.WorkspaceWindow.Home.Workspaces;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 namespace HFHandyUtils.Physics
 {
@@ -55,6 +53,7 @@ namespace HFHandyUtils.Physics
         /// </summary>
         public override void DrawGizmos()
         {
+            #if UNITY_EDITOR
             // Start by setting the color
             SetGizmoColor();
 
@@ -102,6 +101,7 @@ namespace HFHandyUtils.Physics
             Handles.DrawLine(   GetWorldPosition() + backRight * radius,       GetWorldEndPosition() + backRight * radius       );
             Handles.DrawLine(   GetWorldPosition() + backLeft * radius,        GetWorldEndPosition() + backLeft * radius        );
             */
+            #endif
         }
         private Vector3 GetWorldEndPosition()
         {
