@@ -11,11 +11,11 @@ namespace HFHandyUtils
         /// <summary>
         ///     Method that runs logic when the object is activated
         /// </summary>
-        protected void OnActivate();
+        public void OnActivate();
 
         /// <summary>
         ///     Method that runs logic when the object is deactivated
         /// </summary>
-        protected void OnDeactivate();
+        public void OnDeactivate();
     }
 }
