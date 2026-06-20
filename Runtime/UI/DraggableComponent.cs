@@ -12,6 +12,10 @@ namespace HFHandyUtils.UI
         /// </summary>
         [Tooltip("Snaps the draggable component back to its origin when let go. Lerps if nothing is activated, teleports otherwise")]
         public bool snapToOrigin = false;
+        /// <summary>
+        ///     Current reset position
+        /// </summary>
+        [HideInInspector] public Vector3 resetPosition = Vector3.zero;
 
 
         /// <summary>
@@ -22,10 +26,6 @@ namespace HFHandyUtils.UI
         ///     Current target position
         /// </summary>
         private Vector3 _targetPosition = Vector3.zero;
-        /// <summary>
-        ///     Current reset position
-        /// </summary>
-        private Vector3 _resetPosition = Vector3.zero;
 
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace HFHandyUtils.UI
 
             // Reset our position
             if (snapToOrigin && !activated) ResetPosition();
-            else if(snapToOrigin && activated) Teleport(_resetPosition);
+            else if(snapToOrigin && activated) Teleport(resetPosition);
             else if(!snapToOrigin) SetResetPosition(transform.position);
         }
         #endregion
@@ -133,22 +133,22 @@ namespace HFHandyUtils.UI
         /// <param name="resetPosition">New reset</param>
         public void SetResetPosition(Vector3 resetPosition) 
         { 
-            _resetPosition = resetPosition;
-            SetTargetPosition(_resetPosition);
+            this.resetPosition = resetPosition;
+            SetTargetPosition(this.resetPosition);
         }
         /// <summary>
         ///     Resets the tile position
         /// </summary>
-        private void ResetPosition()
+        public void ResetPosition()
         {
-            SetTargetPosition(_resetPosition);
+            SetTargetPosition(resetPosition);
         }
 
         /// <summary>
         ///     Teleports the object to a position
         /// </summary>
         /// <param name="position">new position</param>
-        private void Teleport(Vector3 position)
+        public void Teleport(Vector3 position)
         {
             SetTargetPosition(position);
             transform.position = position;
