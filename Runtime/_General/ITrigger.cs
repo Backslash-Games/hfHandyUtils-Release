@@ -11,6 +11,6 @@ namespace HFHandyUtils
         /// <summary>
         ///     Method that runs logic when the object is triggered
         /// </summary>
-        public void OnTrigger();
+        protected void OnTrigger();
     }
 }
