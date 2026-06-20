@@ -44,17 +44,17 @@ namespace HFHandyUtils.UI
 
 
         #region Unity Methods
-        private void Awake()
+        protected virtual void Awake()
         {
             SetResetPosition(transform.position);
         }
-        private void Update()
+        protected virtual void Update()
         {
             if (!_held) return;
             // Click and drag logic
             if (s_EventData != null && s_HeldObject != null) s_HeldObject.SetTargetPosition(s_EventData.position);
         }
-        private void LateUpdate()
+        protected virtual void LateUpdate()
         {
             LateUpdateMovement();
         }
@@ -94,7 +94,7 @@ namespace HFHandyUtils.UI
         /// </summary>
         /// <param name="eventData">Input event data</param>
         /// <returns>True when object is activated</returns>
-        public virtual bool OnDrop(PointerEventData eventData)
+        protected virtual bool OnDrop(PointerEventData eventData)
         {
             return false;
         }
