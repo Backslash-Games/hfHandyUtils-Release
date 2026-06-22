@@ -37,7 +37,7 @@ namespace HFHandyUtils.Mono
         /// <summary>
         ///     Declares text color
         /// </summary>
-        [SerializeField] private Color textColor = Color.white;
+        [SerializeField] private UnityEngine.Color textColor = UnityEngine.Color.white;
 
         /// <summary>
         ///     Declares the build style of the canvas

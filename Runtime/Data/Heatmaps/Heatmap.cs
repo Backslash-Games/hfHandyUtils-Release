@@ -288,7 +288,7 @@ namespace HFHandyUtils.Data.Heatmaps
             Initialize();
 
             // Draw bounds
-            Gizmos.color = Color.green;
+            Gizmos.color = UnityEngine.Color.green;
             Gizmos.DrawWireCube(bounds.center, bounds.size);
             // Draw points
             foreach (MapValue value in mapValues)

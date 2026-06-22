@@ -331,7 +331,7 @@ namespace HFHandyUtils.Data.Props
             cBounds.center = boundingBox.center + (direction * boundParameter);
             cBounds.size = new Vector3(direction.x == 0 ? boundingBox.size.x + _edgeThreshold : boundSize, direction.y == 0 ? boundingBox.size.y + _edgeThreshold : boundSize, direction.z == 0 ? boundingBox.size.z + _edgeThreshold : boundSize);
 
-            Gizmos.color = Color.cyan;
+            Gizmos.color = UnityEngine.Color.cyan;
             Gizmos.DrawWireCube(cBounds.center, cBounds.size);
         }
         
@@ -469,7 +469,7 @@ namespace HFHandyUtils.Data.Props
             if (!meshInitialized) return;
 
             // Draw bounds
-            Gizmos.color = Color.yellow;
+            Gizmos.color = UnityEngine.Color.yellow;
             Gizmos.DrawWireCube(boundingBox.center, boundingBox.size);
             // Draw bound center
             Gizmos.DrawSphere(boundingBox.center, 0.1f);
@@ -512,7 +512,7 @@ namespace HFHandyUtils.Data.Props
             // Draw face verticies
             for (int i = 0; i < faceVerticies.Length; i++)
             {
-                Gizmos.color = Color.Lerp(Color.white, Color.blue, (float)i / (faceVerticies.Length - 1));
+                Gizmos.color = UnityEngine.Color.Lerp(UnityEngine.Color.white, UnityEngine.Color.blue, (float)i / (faceVerticies.Length - 1));
                 Gizmos.DrawWireSphere(faceVerticies[i], 0.1f * transform.localScale.magnitude);
             }
         }

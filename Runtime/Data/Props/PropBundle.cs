@@ -439,7 +439,7 @@ namespace HFHandyUtils.Data.Props
             // Draw map
             heatmap.Debug_DrawGizmos();
             // Draw bounds
-            Gizmos.color = Color.blue;
+            Gizmos.color = UnityEngine.Color.blue;
             bounds.center = transform.position; // DONT LIKE THIS LINE... MOVE TO EDITOR
             Gizmos.DrawWireCube(bounds.center, bounds.size);
 

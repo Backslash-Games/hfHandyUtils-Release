@@ -4,19 +4,6 @@ namespace HFHandyUtils.Data.Heatmaps
 {
     public static class HeatmapConstants
     {
-        public readonly static Gradient s_ValueGradient = new Gradient()
-        {
-            alphaKeys = new GradientAlphaKey[] { new GradientAlphaKey(1, 0) },
-            colorKeys = new GradientColorKey[]
-            {
-                new GradientColorKey(Color.blue, 0),
-                new GradientColorKey(Color.green, 0.33f),
-                new GradientColorKey(Color.yellow, 0.66f),
-                new GradientColorKey(Color.red, 1)
-            }
-        };
-
-
         #region Draw Gizmos - Value
         /// <summary>
         ///     Draws a debug Map value. Must be called within OnDrawGizmos
@@ -43,7 +30,7 @@ namespace HFHandyUtils.Data.Heatmaps
             radius *= 1 + value * 0.2f;
 
             // Draw sphere
-            Gizmos.color = s_ValueGradient.Evaluate(value);
+            Gizmos.color = Color.heatGradient.Evaluate(value);
             Gizmos.DrawSphere(point, radius);
         }
         #endregion

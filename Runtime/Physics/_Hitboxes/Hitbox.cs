@@ -110,7 +110,7 @@ namespace HFHandyUtils.Physics
         /// <summary>
         ///     Tint of the drawn gizmo
         /// </summary>
-        private static readonly Color[] gizmo_colors = new Color[2] { new Color(0, 1, 0, gizmo_alpha), new Color(1, 0, 0, gizmo_alpha) };
+        private static readonly UnityEngine.Color[] gizmo_colors = new UnityEngine.Color[2] { new UnityEngine.Color(0, 1, 0, gizmo_alpha), new UnityEngine.Color(1, 0, 0, gizmo_alpha) };
         
         
         /// <summary>
