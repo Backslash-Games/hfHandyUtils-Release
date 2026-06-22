@@ -30,7 +30,7 @@ namespace HFHandyUtils.Data.Heatmaps
             radius *= 1 + value * 0.2f;
 
             // Draw sphere
-            Gizmos.color = Color.heatGradient.Evaluate(value);
+            Gizmos.color = HFColor.heatGradient.Evaluate(value);
             Gizmos.DrawSphere(point, radius);
         }
         #endregion

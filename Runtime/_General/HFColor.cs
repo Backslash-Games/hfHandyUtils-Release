@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace HFHandyUtils
 {
-    public static class Color
+    public static class HFColor
     {
         /// <summary>
         ///     Gradient used to show hue
@@ -12,14 +12,14 @@ namespace HFHandyUtils
             alphaKeys = new GradientAlphaKey[] { new GradientAlphaKey(1, 0) },
             colorKeys = new GradientColorKey[]
             {
-                new GradientColorKey(UnityEngine.Color.red, 0),
-                new GradientColorKey(UnityEngine.Color.orange, 0.143f),
-                new GradientColorKey(UnityEngine.Color.yellow, 0.286f),
-                new GradientColorKey(UnityEngine.Color.green, 0.429f),
-                new GradientColorKey(UnityEngine.Color.blue, 0.572f),
-                new GradientColorKey(UnityEngine.Color.indigo, 0.715f),
-                new GradientColorKey(UnityEngine.Color.magenta, 0.858f),
-                new GradientColorKey(UnityEngine.Color.red, 1)
+                new GradientColorKey(Color.red, 0),
+                new GradientColorKey(Color.orange, 0.143f),
+                new GradientColorKey(Color.yellow, 0.286f),
+                new GradientColorKey(Color.green, 0.429f),
+                new GradientColorKey(Color.blue, 0.572f),
+                new GradientColorKey(Color.indigo, 0.715f),
+                new GradientColorKey(Color.magenta, 0.858f),
+                new GradientColorKey(Color.red, 1)
             }
         };
         /// <summary>
@@ -30,10 +30,10 @@ namespace HFHandyUtils
             alphaKeys = new GradientAlphaKey[] { new GradientAlphaKey(1, 0) },
             colorKeys = new GradientColorKey[]
             {
-                new GradientColorKey(UnityEngine.Color.blue, 0),
-                new GradientColorKey(UnityEngine.Color.green, 0.33f),
-                new GradientColorKey(UnityEngine.Color.yellow, 0.66f),
-                new GradientColorKey(UnityEngine.Color.red, 1)
+                new GradientColorKey(Color.blue, 0),
+                new GradientColorKey(Color.green, 0.33f),
+                new GradientColorKey(Color.yellow, 0.66f),
+                new GradientColorKey(Color.red, 1)
             }
         };
         /// <summary>
@@ -44,9 +44,9 @@ namespace HFHandyUtils
             alphaKeys = new GradientAlphaKey[] { new GradientAlphaKey(1, 0) },
             colorKeys = new GradientColorKey[]
             {
-                new GradientColorKey(UnityEngine.Color.red, 0),
-                new GradientColorKey(UnityEngine.Color.yellow, 0.5f),
-                new GradientColorKey(UnityEngine.Color.green, 1)
+                new GradientColorKey(Color.red, 0),
+                new GradientColorKey(Color.yellow, 0.5f),
+                new GradientColorKey(Color.green, 1)
             }
         };
     }
