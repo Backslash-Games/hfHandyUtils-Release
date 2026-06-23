@@ -15,7 +15,7 @@ namespace HFHandyUtils.UI
         /// <summary>
         ///     Current reset position
         /// </summary>
-        [HideInInspector] public Vector3 resetPosition = Vector3.zero;
+        public Vector3 resetPosition = Vector3.zero;
 
 
         /// <summary>
