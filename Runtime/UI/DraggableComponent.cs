@@ -67,15 +67,19 @@ namespace HFHandyUtils.UI
         #region Interface
         public void OnPointerDown(PointerEventData eventData)
         {
+            OnClickDown(eventData);
             if (!activationButtons.Contains(eventData.button)) return;
             ForcePickup(eventData);
         }
+        protected virtual void OnClickDown(PointerEventData eventData) { }
 
         public void OnPointerUp(PointerEventData eventData)
         {
+            OnClickUp(eventData);
             if (!activationButtons.Contains(eventData.button)) return;
             ForceDrop(eventData);
         }
+        protected virtual void OnClickUp(PointerEventData eventData) { }
         #endregion
         #region Virtuals
         /// <summary>
