@@ -17,6 +17,10 @@ namespace HFHandyUtils.UI
         /// </summary>
         public Vector3 resetPosition = Vector3.zero;
 
+        /// <summary>
+        ///     Drag activation buttons
+        /// </summary>
+        public List<PointerEventData.InputButton> activationButtons = new List<PointerEventData.InputButton>();
 
         /// <summary>
         ///     Flag that checks if the component is held
@@ -63,11 +67,13 @@ namespace HFHandyUtils.UI
         #region Interface
         public void OnPointerDown(PointerEventData eventData)
         {
+            if (!activationButtons.Contains(eventData.button)) return;
             ForcePickup(eventData);
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
+            if (!activationButtons.Contains(eventData.button)) return;
             ForceDrop(eventData);
         }
         #endregion
