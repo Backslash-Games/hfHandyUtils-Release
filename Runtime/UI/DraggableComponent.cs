@@ -63,29 +63,12 @@ namespace HFHandyUtils.UI
         #region Interface
         public void OnPointerDown(PointerEventData eventData)
         {
-            // Start click and drag
-            s_EventData = eventData;
-            s_HeldObject = this;
-            _held = true;
+            ForcePickup(eventData);
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            // Make sure our movement is done
-            SetTargetPosition(eventData.position);
-
-            // Stop click and drag
-            s_EventData = null;
-            s_HeldObject = null;
-            _held = false;
-
-            // Run drop logic
-            bool activated = OnDrop(eventData);
-
-            // Reset our position
-            if (snapToOrigin && !activated) ResetPosition();
-            else if(snapToOrigin && activated) Teleport(resetPosition);
-            else if(!snapToOrigin) SetResetPosition(transform.position);
+            ForceDrop(eventData);
         }
         #endregion
         #region Virtuals
@@ -100,6 +83,39 @@ namespace HFHandyUtils.UI
         }
         #endregion
 
+        #region Logic
+        /// <summary>
+        ///     Forces the current draggable object to be picked up
+        /// </summary>
+        public void ForcePickup(PointerEventData eventData)
+        {
+            // Start click and drag
+            s_EventData = eventData;
+            s_HeldObject = this;
+            _held = true;
+        }
+        /// <summary>
+        ///     Forces the current draggable object to be picked up
+        /// </summary>
+        public void ForceDrop(PointerEventData eventData)
+        {
+            // Make sure our movement is done
+            SetTargetPosition(eventData.position);
+
+            // Stop click and drag
+            s_EventData = null;
+            s_HeldObject = null;
+            _held = false;
+
+            // Run drop logic
+            bool activated = OnDrop(eventData);
+
+            // Reset our position
+            if (snapToOrigin && !activated) ResetPosition();
+            else if (snapToOrigin && activated) Teleport(resetPosition);
+            else if (!snapToOrigin) SetResetPosition(transform.position);
+        }
+        #endregion
         #region Data
         /// <summary>
         ///     Gets all results based on pointer event data position
