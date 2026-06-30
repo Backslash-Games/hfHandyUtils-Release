@@ -82,10 +82,11 @@ namespace HFHandyUtils.UI
         /// </summary>
         /// <param name="eventData">Input event data</param>
         /// <returns>True when object is activated</returns>
-        protected virtual bool OnDrop(PointerEventData eventData)
-        {
-            return false;
-        }
+        protected virtual bool OnDrop(PointerEventData eventData) { return false; }
+        /// <summary>
+        ///     Method run when the object settles
+        /// </summary>
+        protected virtual void OnSettle() { }
         #endregion
 
         #region Logic
@@ -146,12 +147,18 @@ namespace HFHandyUtils.UI
         }
         #endregion
         #region Positioning
+        private bool isSettled = true;
+        static readonly float s_SettleDistance = 0.01f;
         /// <summary>
         ///     Lerps movement to target position
         /// </summary>
         private void LateUpdateMovement()
         {
+            bool flag = isSettled;
             transform.position = Vector3.Lerp(transform.position, _targetPosition, UnityEngine.Time.deltaTime * s_MovementSpeed);
+            // -> Check for settle
+            isSettled = Vector3.Distance(transform.position, _targetPosition) <= s_SettleDistance;
+            if (!flag && isSettled) OnSettle();
         }
 
         /// <summary>
