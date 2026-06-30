@@ -73,6 +73,11 @@ namespace HFHandyUtils.UI
         #endregion
         #region Virtuals
         /// <summary>
+        ///     Method run when the object is picked up
+        /// </summary>
+        /// <param name="eventData">Input event data</param>
+        protected virtual void OnPickup(PointerEventData eventData) { }
+        /// <summary>
         ///     Method run when the object is dropped
         /// </summary>
         /// <param name="eventData">Input event data</param>
@@ -93,6 +98,9 @@ namespace HFHandyUtils.UI
             s_EventData = eventData;
             s_HeldObject = this;
             _held = true;
+
+            // Run pickup logic
+            OnPickup(eventData);
         }
         /// <summary>
         ///     Forces the current draggable object to be picked up
