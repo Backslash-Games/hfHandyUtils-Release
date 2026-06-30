@@ -158,7 +158,7 @@ namespace HFHandyUtils.UI
             transform.position = Vector3.Lerp(transform.position, _targetPosition, UnityEngine.Time.deltaTime * s_MovementSpeed);
             // -> Check for settle
             isSettled = Vector3.Distance(transform.position, _targetPosition) <= s_SettleDistance;
-            if (!flag && isSettled) OnSettle();
+            if (!flag && isSettled && !_held) OnSettle();
         }
 
         /// <summary>
