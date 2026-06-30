@@ -97,7 +97,7 @@ namespace HFHandyUtils.UI
         /// <summary>
         ///     Forces the current draggable object to be picked up
         /// </summary>
-        public void ForceDrop(PointerEventData eventData)
+        public void ForceDrop(PointerEventData eventData, bool runEvent = true)
         {
             // Make sure our movement is done
             SetTargetPosition(eventData.position);
@@ -108,12 +108,20 @@ namespace HFHandyUtils.UI
             _held = false;
 
             // Run drop logic
-            bool activated = OnDrop(eventData);
+            bool activated = false;
+            if(runEvent) activated = OnDrop(eventData);
 
             // Reset our position
             if (snapToOrigin && !activated) ResetPosition();
             else if (snapToOrigin && activated) Teleport(resetPosition);
             else if (!snapToOrigin) SetResetPosition(transform.position);
+        }
+        /// <summary>
+        ///     Forces the current draggable object to reset without function
+        /// </summary>
+        public void ForceCancel(PointerEventData eventData)
+        {
+            ForceDrop(eventData, false);
         }
         #endregion
         #region Data
